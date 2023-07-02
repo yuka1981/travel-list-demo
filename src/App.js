@@ -1,18 +1,28 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import initialItems from "./fixtures/items";
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(initialItems);
 
   const handleAddItems = (item) => {
     setItems([...items, item]);
+  };
+
+  const handleDeleteItem = (id) => {
+    setItems((items) => {
+      return (
+        // true -> keep item
+        items.filter((item) => item.id !== id)
+      );
+    });
   };
 
   return (
     <div>
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} />
+      <PackingList items={items} onDeleteItem={handleDeleteItem} />
       <State />
     </div>
   );
@@ -67,25 +77,30 @@ const Form = ({ onAddItems }) => {
   );
 };
 
-const PackingList = ({ items }) => {
+const PackingList = ({ items, onDeleteItem }) => {
   return (
     <div className="list">
       <ul>
         {items.map((item) => (
-          <Item item={item} key={item.description} />
+          <Item
+            item={item}
+            key={item.description}
+            onDeleteItem={onDeleteItem}
+          />
         ))}
       </ul>
     </div>
   );
 };
 
-const Item = ({ item }) => {
+const Item = ({ item, onDeleteItem }) => {
   return (
     <li>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
-      <button>❌</button>
+      {/* when click button -> trigger onDeleteItem function */}
+      <button onClick={() => onDeleteItem(item.id)}>❌</button>
     </li>
   );
 };
