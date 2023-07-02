@@ -1,13 +1,18 @@
 import { useState } from "react";
-import initialItems from "./fixtures/items";
 import { v4 as uuid } from "uuid";
 
 function App() {
+  const [items, setItems] = useState([]);
+
+  const handleAddItems = (item) => {
+    setItems([...items, item]);
+  };
+
   return (
     <div>
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAddItems={handleAddItems} />
+      <PackingList items={items} />
       <State />
     </div>
   );
@@ -17,7 +22,7 @@ const Logo = () => {
   return <h1>Far Away</h1>;
 };
 
-const Form = () => {
+const Form = ({ onAddItems }) => {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
@@ -32,8 +37,8 @@ const Form = () => {
       packed: false,
       id: uuid(),
     };
-    console.log(newItem);
 
+    onAddItems(newItem);
     setDescription("");
     setQuantity(1);
   };
@@ -62,11 +67,11 @@ const Form = () => {
   );
 };
 
-const PackingList = () => {
+const PackingList = ({ items }) => {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((item) => (
+        {items.map((item) => (
           <Item item={item} key={item.description} />
         ))}
       </ul>
