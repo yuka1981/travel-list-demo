@@ -1,3 +1,5 @@
+import initialItems from "./fixtures/items";
+
 function App() {
   return (
     <div>
@@ -22,7 +24,26 @@ const Form = () => {
 };
 
 const PackingList = () => {
-  return <div className="list">List</div>;
+  return (
+    <div className="list">
+      <ul>
+        {initialItems.map((item) => (
+          <Item item={item} key={item.description} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const Item = ({ item }) => {
+  return (
+    <li>
+      <span style={item.packed ? { textDecoration: "line-through" } : {}}>
+        {item.quantity} {item.description}
+      </span>
+      <button>❌</button>
+    </li>
+  );
 };
 
 const State = () => {
