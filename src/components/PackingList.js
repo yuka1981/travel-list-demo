@@ -7,7 +7,7 @@ const PackingList = ({ items, onDeleteItem, onToggleItem }) => {
         {items.map((item) => (
           <Item
             item={item}
-            key={item.description}
+            key={`${item.id}-${item.description}`}
             onDeleteItem={onDeleteItem}
             onToggleItem={onToggleItem}
           />

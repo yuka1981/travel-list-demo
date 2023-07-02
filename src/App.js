@@ -3,10 +3,10 @@ import Logo from "./components/Logo";
 import Form from "./components/Form";
 import PackingList from "./components/PackingList";
 import State from "./components/State";
-import initialItems from "./fixtures/items";
+// import initialItems from "./fixtures/items";
 
 function App() {
-  const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState([]);
 
   const handleAddItems = (item) => {
     setItems([...items, item]);
@@ -50,7 +50,7 @@ function App() {
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
       />
-      <State />
+      <State items={items} />
     </div>
   );
 }
