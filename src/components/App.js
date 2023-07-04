@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Logo from "./components/Logo";
-import Form from "./components/Form";
-import PackingList from "./components/PackingList";
-import State from "./components/State";
-// import initialItems from "./fixtures/items";
+import Logo from "./Logo";
+import Form from "./Form";
+import PackingList from "./PackingList";
+import State from "./State";
+// import initialItems from "../fixtures/items";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -41,6 +41,13 @@ function App() {
     // );
   };
 
+  const handleClearList = () => {
+    const confirmed = window.confirm("Are you sure delete all items?");
+    if (confirmed) {
+      setItems([]);
+    }
+  };
+
   return (
     <div>
       <Logo />
@@ -49,6 +56,7 @@ function App() {
         items={items}
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
+        onClearList={handleClearList}
       />
       <State items={items} />
     </div>
